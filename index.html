@@ -75,9 +75,10 @@ function loadImages(){
   data.forEach(photo=>{
 
   const imageUrl = photo.urls.small;
-  const fullImageUrl = photo.urls.full;
   const newImage = document.createElement("img");
   newImage.src = imageUrl;
+  newImage.loading = "lazy";
+
 
   gallery.appendChild(newImage);
   });
@@ -122,3 +123,16 @@ window.addEventListener('scroll', debounce(function(){
   </script>
 </body>
 </html>
+
+Step 12: Add lazy loading for images (30 min)
+
+Use loading="lazy" attribute
+Images load as they enter viewport
+Test: Network tab shows gradual loading
+
+Step 13: Optimize performance (30 min)
+
+Limit initial render
+Use documentFragment for batch appending
+Test: Smooth scrolling
+
