@@ -19,23 +19,43 @@
       object-fit: cover;
     }
 
+    #spinner{
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+
   </style>
 </head>
 <body>
   
 <div id="gallery"></div>
+<div id="spinner">loading...</div>
 
   <script>
     const gallery = document.querySelector("#gallery");
+    const spinner = document.querySelector("#spinner");
+
 
     let page = 1;
+    
+    let isLoading = false;
+    
 
     const apiKey = '3NNxJrdL9DFkFTxOL1q1JlfQn9OHPkVOLUNvSKJvX_s';
   
 
+
+    
 function loadImages(){
 
-  const url = `https://api.unsplash.com/photos?page=${page}&per_page=30&client_id=${apiKey}`;  
+  if(isLoading)
+    return;
+
+  isLoading = true;
+  spinner.style.display = "block";
+
+  const url = `https://api.unsplash.com/photos?page=${page}&per_page=20&client_id=${apiKey}`;  
 
     fetch(url)
   .then(response=>{
@@ -51,7 +71,6 @@ function loadImages(){
 })
 
 .then((data) => {
-  console.log(data);
 
   data.forEach(photo=>{
 
@@ -63,26 +82,42 @@ function loadImages(){
   gallery.appendChild(newImage);
   });
 
+  isLoading = false;
+  spinner.style.display = "none";
+
+  
+ if(document.body.scrollHeight <= window.innerHeight){
+  page +=1;
+  loadImages();
+  }
 })
 
 .catch((error) =>{
   console.error('Error:', error);
+  isLoading = false;
+  spinner.style.display = "none";
 });
 
-console.log(page);
 }
+
 loadImages();
 
+ function debounce (func, delay){
+  let timer;
+  return function(){
+    clearTimeout(timer);
+    timer = setTimeout(func, delay);
+  }
+}
 
-window.addEventListener('scroll', function(){
+
+window.addEventListener('scroll', debounce(function(){
   if((window.innerHeight + window.scrollY) >= document.body.offsetHeight){
-    console.log("You have hit the bottom!");
-  
   page += 1;
   loadImages();
   }
-});
 
+ }, 200));
 
   </script>
 </body>
