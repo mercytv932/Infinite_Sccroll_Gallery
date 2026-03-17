@@ -46,7 +46,7 @@
   
 
 
-    
+    //Fetching images from unsplash and appending to gallery.
 function loadImages(){
 
   if(isLoading)
@@ -72,6 +72,8 @@ function loadImages(){
 
 .then((data) => {
 
+ const fragment = document.createDocumentFragment();
+
   data.forEach(photo=>{
 
   const imageUrl = photo.urls.small;
@@ -79,9 +81,12 @@ function loadImages(){
   newImage.src = imageUrl;
   newImage.loading = "lazy";
 
+  fragment.appendChild(newImage);
 
-  gallery.appendChild(newImage);
   });
+
+  gallery.appendChild(fragment);
+
 
   isLoading = false;
   spinner.style.display = "none";
@@ -98,12 +103,14 @@ function loadImages(){
   isLoading = false;
   spinner.style.display = "none";
 });
-
 }
 
-loadImages();
 
- function debounce (func, delay){
+loadImages(); // LoadImages when page opens
+
+
+//Prevent scroll from firing too many times
+function debounce (func, delay){
   let timer;
   return function(){
     clearTimeout(timer);
@@ -111,7 +118,7 @@ loadImages();
   }
 }
 
-
+// Load more images when user reaches bottom
 window.addEventListener('scroll', debounce(function(){
   if((window.innerHeight + window.scrollY) >= document.body.offsetHeight){
   page += 1;
@@ -120,19 +127,7 @@ window.addEventListener('scroll', debounce(function(){
 
  }, 200));
 
+
   </script>
 </body>
 </html>
-
-Step 12: Add lazy loading for images (30 min)
-
-Use loading="lazy" attribute
-Images load as they enter viewport
-Test: Network tab shows gradual loading
-
-Step 13: Optimize performance (30 min)
-
-Limit initial render
-Use documentFragment for batch appending
-Test: Smooth scrolling
-
