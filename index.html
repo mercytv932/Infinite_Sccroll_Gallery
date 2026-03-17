@@ -25,10 +25,38 @@
       padding: 20px;
     }
 
+    header{
+      background-color: #111;
+      padding: 40px 20px 20px;
+      color: #f0f0f0;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1{
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    header p{
+      color: #888;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      margin-top: 8px;
+    }
+
   </style>
 </head>
 <body>
-  
+  <header>
+    <h1>Glimpse</h1>
+    <p>Discover beautiful photos</p>
+  </header>
 <div id="gallery"></div>
 <div id="spinner">loading...</div>
 
