@@ -108,6 +108,11 @@ function loadImages(){
   const newImage = document.createElement("img");
   newImage.src = imageUrl;
   newImage.loading = "lazy";
+  newImage.style.cursor = "pointer";
+
+  newImage.addEventListener("click", function(){
+    window.open(imageUrl, "_blank");
+  })
 
   fragment.appendChild(newImage);
 
